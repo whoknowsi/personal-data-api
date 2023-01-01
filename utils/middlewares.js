@@ -11,12 +11,14 @@ const tokenExtractor = (req, _, next) => {
 
 const checkAuthentication = (req, res, next) => {
   const token = req.token
-  if (!token) return res.status(401).json({ error: 'Unauthorized - You do not have permission to perform this action.' })
+  const unauthorizedMsg = 'Unauthorized - You do not have permission to perform this action.'
+
+  if (!token) return res.status(401).json({ error: unauthorizedMsg })
 
   try {
     const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN)
 
-    if (!decodedToken.id) return res.status(401).json({ error: 'Unauthorized - You do not have permission to perform this action.' })
+    if (!decodedToken.id) return res.status(401).json({ error: unauthorizedMsg })
 
     req.username = decodedToken.username
     req.id = decodedToken.id
