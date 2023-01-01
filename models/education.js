@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const educationSchema = new mongoose.Schema({
   school: {
     type: String,
-    require: true
+    required: true
   },
   degree: {
     type: String,
@@ -15,15 +15,15 @@ const educationSchema = new mongoose.Schema({
       'Technical',
       'Doctor'
     ],
-    require: true
+    required: true
   },
   fieldOfStudy: {
     type: String,
-    require: true
+    required: true
   },
   startDate: {
     type: Date,
-    require: true
+    required: true
   },
   endDate: {
     type: Date
@@ -38,13 +38,14 @@ const educationSchema = new mongoose.Schema({
     type: {
       city: {
         type: String,
-        require: true
+        required: true
       },
       country: {
         type: String,
-        require: true
+        required: true
       }
-    }
+    },
+    required: true
   },
   media: {
     type: Array

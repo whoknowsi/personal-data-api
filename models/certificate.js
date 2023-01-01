@@ -3,11 +3,11 @@ const mongoose = require('mongoose')
 const certificateSchema = new mongoose.Schema({
   name: {
     type: String,
-    require: true
+    required: true
   },
   issuingOrganization: {
     type: String,
-    require: true
+    required: true
   },
   expires: {
     type: Boolean,
@@ -15,7 +15,7 @@ const certificateSchema = new mongoose.Schema({
   },
   issueDate: {
     type: Date,
-    require: true
+    required: true
   },
   expirationDate: {
     type: Date
