@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const { certificates } = require('../config/fields')
+const certificate = require('../config/fields/certificate')
 
-const certificateSchema = new mongoose.Schema(certificates)
+const certificateSchema = new mongoose.Schema(certificate)
 
 module.exports = mongoose.model('Certificate', certificateSchema)

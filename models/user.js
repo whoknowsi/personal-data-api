@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const { users } = require('../config/fields')
+const user = require('../config/fields/user')
 
-const userSchema = new mongoose.Schema(users)
+const userSchema = new mongoose.Schema(user)
 
 module.exports = mongoose.model('User', userSchema)

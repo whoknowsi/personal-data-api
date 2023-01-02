@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const { projects } = require('../config/fields')
+const project = require('../config/fields/project')
 
-const projectSchema = new mongoose.Schema(projects)
+const projectSchema = new mongoose.Schema(project)
 
 module.exports = mongoose.model('Project', projectSchema)

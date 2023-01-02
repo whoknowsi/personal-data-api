@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const { workExperiences } = require('../config/fields')
+const workExperience = require('../config/fields/workExperience')
 
-const workExperienceScheme = new mongoose.Schema(workExperiences)
+const workExperienceScheme = new mongoose.Schema(workExperience)
 
 module.exports = mongoose.model('WorkExperience', workExperienceScheme)
