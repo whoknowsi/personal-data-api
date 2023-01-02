@@ -16,11 +16,15 @@ router.get('/:field', async (req, res) => {
   const endpoint = toCamelCase(req.params.endpoint)
   const field = toCamelCase(req.params.field)
 
+  
   const foundedEndpoint = fields[endpoint]
   if (!foundedEndpoint) return res.status(404).json({ message: 'Field not found' })
-
+  
   const foundedField = foundedEndpoint[field]
   if (!foundedField) return res.status(404).json({ message: 'Field not found' })
+
+  const isArray = Array.isArray(foundedField)
+  if (isArray) return res.status(200).json({ field: { type: [ ...foundedField], fieldName: field } })
 
   res.status(200).json({ field: { ...foundedField, fieldName: field } })
 })

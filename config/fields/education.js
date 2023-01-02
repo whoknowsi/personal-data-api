@@ -47,7 +47,9 @@ module.exports = {
     },
     required: true
   },
-  media: {
-    type: 'Array'
-  }
+  media: [
+    {
+      type: 'String'
+    }
+  ]
 }

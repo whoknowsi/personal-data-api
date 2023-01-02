@@ -33,9 +33,11 @@ module.exports = {
   url: {
     type: 'String'
   },
-  media: {
-    type: 'Array'
-  },
+  media: [
+    {
+    type: 'String'
+    }
+  ],
   client: {
     type: 'String',
     required: true
