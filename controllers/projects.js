@@ -4,7 +4,7 @@ const { checkAuthentication } = require('../utils/middlewares')
 
 router.get('/', async (req, res) => {
   const projects = await Project.find({})
-  res.status(200).json(projects)
+  res.status(200).json({ projects: projects })
 })
 
 router.post('/', checkAuthentication, async (req, res) => {
@@ -12,7 +12,7 @@ router.post('/', checkAuthentication, async (req, res) => {
 
   try {
     const savedProject = await newProject.save()
-    res.status(200).json(savedProject)
+    res.status(200).json({ project: savedProject })
   } catch (error) {
     res.status(400).json(error)
   }
