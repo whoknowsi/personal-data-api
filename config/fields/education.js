@@ -6,18 +6,20 @@ module.exports = {
   degree: {
     type: 'String',
     enum: [
-      'Bachelor',
-      'Master',
-      'Engineer',
-      'High school',
-      'Technical',
-      'Doctor'
+      "Bachelor's degree",
+      "Master's degree",
+      "Doctorate degree",
+      "Associate's degree",
+      "Technical degree",
+      "Technical diploma",
+      "Professional certification",
+      "High school diploma",
+      "Baccalaureate diploma"
     ],
     required: true
   },
   fieldOfStudy: {
-    type: 'String',
-    required: true
+    type: 'String'
   },
   startDate: {
     type: 'Date',

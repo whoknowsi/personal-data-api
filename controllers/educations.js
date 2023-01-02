@@ -4,7 +4,7 @@ const { checkAuthentication } = require('../utils/middlewares')
 
 router.get('/', async (req, res) => {
   const educations = await Education.find({})
-  res.status(200).json(educations)
+  res.status(200).json({ educations: educations })
 })
 
 router.post('/', checkAuthentication, async (req, res) => {
@@ -12,7 +12,7 @@ router.post('/', checkAuthentication, async (req, res) => {
 
   try {
     const savedEducation = await newEducation.save()
-    res.status(200).json(savedEducation)
+    res.status(200).json({ education: savedEducation })
   } catch (error) {
     res.status(400).json(error)
   }
