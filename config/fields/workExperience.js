@@ -1,7 +1,6 @@
 module.exports = {
   company: {
-    type: 'String',
-    required: true
+    type: 'String'
   },
   title: {
     type: 'String',
@@ -25,22 +24,19 @@ module.exports = {
     type: {
       city: {
         type: 'String',
-        required: true
       },
       country: {
         type: 'String',
-        required: true
       },
-      workType: {
-        type: 'String',
-        enum: [
-          'On-site',
-          'Hybrid',
-          'Remote'
-        ],
-        required: true
-      }
     },
+  },
+  locationType: {
+    type: 'String',
+    enum: [
+      'On-site',
+      'Hybrid',
+      'Remote'
+    ],
     required: true
   },
   startDate: {
@@ -50,8 +46,14 @@ module.exports = {
   endDate: {
     type: 'Date'
   },
-  responsabilities: {
-    type: 'Array',
-    required: true
-  }
+  responsabilities: [
+    {
+      type: 'String'
+    }
+  ],
+  skills: [
+    {
+      type: 'String'
+    }
+  ]
 }
