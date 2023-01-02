@@ -7,7 +7,10 @@ const mongoose = require('mongoose')
 
 const educationsRouter = require('./controllers/educations')
 const certificatesRouter = require('./controllers/certificates')
-const workExperience = require('./controllers/workExperience')
+const workExperiencesRouter = require('./controllers/workExperiences')
+const deploymentsRouter = require('./controllers/deployments')
+const projectsRouter = require('./controllers/projects')
+const fieldsRouter = require('./controllers/fields')
 const authRouter = require('./controllers/auth')
 
 const middlewares = require('./utils/middlewares')
@@ -25,9 +28,12 @@ app.use(morgan('dev'))
 
 app.use(middlewares.tokenExtractor)
 
+app.use('/api/:endpoint/fields', fieldsRouter)
 app.use('/api/educations', educationsRouter)
 app.use('/api/certificates', certificatesRouter)
-app.use('/api/work-experiences', workExperience)
+app.use('/api/work-experiences', workExperiencesRouter)
+app.use('/api/deployments', deploymentsRouter)
+app.use('/api/projects', projectsRouter)
 app.use('/api/auth', authRouter)
 
 app.listen(PORT, () => {
