@@ -4,7 +4,7 @@ const { checkAuthentication } = require('../utils/middlewares')
 
 router.get('/', async (req, res) => {
   const certificates = await Certificate.find({})
-  res.status(200).json(certificates)
+  res.status(200).json({ certificates: certificates })
 })
 
 router.post('/', checkAuthentication, async (req, res) => {
@@ -12,7 +12,7 @@ router.post('/', checkAuthentication, async (req, res) => {
 
   try {
     const savedCertificate = await newCertificate.save()
-    res.status(200).json(savedCertificate)
+    res.status(200).json({ certificate: savedCertificate })
   } catch (error) {
     res.status(400).json(error)
   }

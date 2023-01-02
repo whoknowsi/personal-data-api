@@ -1,23 +1,13 @@
 const User = require('../models/user')
-const bcrypt = require('bcrypt')
 const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
 const mongoose = require('mongoose')
+const { createUser } = require('./test_helpers.js')
 
 beforeEach(async () =>  await User.deleteMany({}))
 
 describe('/api/auth', () => {
-
-  const createUser = async () => {
-    const passwordHash = await bcrypt.hash('testpassword', 10)
-    const newUser = new User ({
-      username: 'testusername',
-      password: passwordHash
-    })
-
-    await newUser.save()
-  }
 
   describe('/login', () => {
     const url = '/api/auth/login'
