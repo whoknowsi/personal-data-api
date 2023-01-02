@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
+
 const { DB_URI } = require('./config/config')
 
 const middlewares = require('./utils/middlewares')

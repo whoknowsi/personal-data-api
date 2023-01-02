@@ -9,8 +9,7 @@ router.post('/login', async (req, res) => {
   const foundUser = await User.findOne({ username })
   if (!foundUser) return res.status(401).json({ error: 'invalid username or password' })
 
-  const correctPassword = bcrypt.compare(password, foundUser.password)
-
+  const correctPassword = bcrypt.compareSync(password, foundUser.password)
   if (!correctPassword) return res.status(401).json({ error: 'invalid username or password' })
 
   const token = jwt.sign({ id: foundUser.id, username: foundUser.username }, process.env.SECRET_TOKEN)
