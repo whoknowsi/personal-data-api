@@ -7,4 +7,8 @@ const mongooseDateToYYYYMMDD = (date) => {
   return formattedDate
 }
 
-module.exports = { mongooseDateToYYYYMMDD }
+const getRandomFromArray = (array) => array[Math.floor(Math.random() * array.length)]
+
+const toCamelCase = (value) => value.replace(/([-_]\w)/g, (m) => m[1].toUpperCase())
+
+module.exports = { mongooseDateToYYYYMMDD, getRandomFromArray, toCamelCase }

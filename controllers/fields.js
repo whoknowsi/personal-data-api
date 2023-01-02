@@ -1,7 +1,6 @@
 const router = require('express').Router({ mergeParams: true })
 const fields = require('../config/fields')
-
-const toCamelCase = (value) => value.replace(/([-_]\w)/g, (m) => m[1].toUpperCase())
+const { toCamelCase } = require('../utils/helpers')
 
 router.get('/', async (req, res) => {
   const endpoint = toCamelCase(req.params.endpoint)
@@ -24,9 +23,12 @@ router.get('/:field', async (req, res) => {
   if (!foundedField) return res.status(404).json({ message: 'Field not found' })
 
   const isArray = Array.isArray(foundedField)
-  if (isArray) return res.status(200).json({ field: { type: [ ...foundedField], fieldName: field } })
 
-  res.status(200).json({ field: { ...foundedField, fieldName: field } })
+  const fieldToSend = isArray 
+    ? { field: { type: [...foundedField], fieldName: field } }
+    : { field: { ...foundedField, fieldName: field } }
+
+  res.status(200).json(fieldToSend)
 })
 
 module.exports = router
