@@ -1,18 +1,18 @@
 const router = require('express').Router()
-const Deployment = require('../models/deployment')
+const Project = require('../models/project')
 const { checkAuthentication } = require('../utils/middlewares')
 
 router.get('/', async (req, res) => {
-  const deployments = await Deployment.find({})
-  res.status(200).json(deployments)
+  const projects = await Project.find({})
+  res.status(200).json(projects)
 })
 
 router.post('/', checkAuthentication, async (req, res) => {
-  const newDeployment = new Deployment({ ...req.body })
+  const newProject = new Project({ ...req.body })
 
   try {
-    const savedDeployment = await newDeployment.save()
-    res.status(200).json(savedDeployment)
+    const savedProject = await newProject.save()
+    res.status(200).json(savedProject)
   } catch (error) {
     res.status(400).json(error)
   }
