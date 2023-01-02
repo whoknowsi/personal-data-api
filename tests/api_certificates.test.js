@@ -65,7 +65,7 @@ describe('/api/certificates', () => {
           username: 'testusername',
           password: 'testpassword'
         })
-        
+
       token = result.body.token
     })
 
@@ -77,7 +77,6 @@ describe('/api/certificates', () => {
         .expect(200)
       
       const certificate = result.body.certificate
-      console.log(certificate)
       expect({...certificate, issueDate: mongooseDateToYYYYMMDD(certificate.issueDate)}).toMatchObject(toCreate)
     })
 
@@ -91,4 +90,4 @@ describe('/api/certificates', () => {
   })
 })
 
-afterAll(() => mongoose.connection.close())
+afterAll(async () => await mongoose.connection.close())

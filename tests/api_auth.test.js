@@ -5,14 +5,15 @@ const api = supertest(app)
 const mongoose = require('mongoose')
 const { createUser } = require('./test_helpers.js')
 
-beforeEach(async () =>  await User.deleteMany({}))
+beforeAll(async () => {
+  await User.deleteMany({})
+  await createUser()
+})
 
 describe('/api/auth', () => {
 
   describe('/login', () => {
     const url = '/api/auth/login'
-
-    beforeEach(async () => await createUser())
 
     test('can login with correct username and password', async () => {
       const response = await api
@@ -49,30 +50,30 @@ describe('/api/auth', () => {
   
   describe('/register', () => {
     const url = '/api/auth/register'
-
+    
     test('can sign up if no User is on database', async () => {
+      await User.deleteMany({})
       const savedUser = await api
         .post(url)
         .send({
-          username: 'registerUsername',
-          password: 'registerPassword'
+          username: 'testusername',
+          password: 'testpassword'
         })
         .expect(200)
-      
-      expect(savedUser.body.username).toBe('registerUsername')
+      expect(savedUser.body.username).toBe('testusername')
     })
 
     test("can't sign up if a User has been created", async () => {
-      await createUser()
+      createUser()
       await api
         .post(url)
         .send({
-          username: 'registerUsername',
-          password: 'registerPassword'
+          username: 'testusername',
+          password: 'testpassword'
         })
         .expect(401)
     })
   })
 })
 
-afterAll(() => mongoose.connection.close())
+afterAll(async () => await mongoose.connection.close())

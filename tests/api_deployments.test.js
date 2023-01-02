@@ -10,6 +10,7 @@ let token = null
 
 beforeAll(async () => {
   await Deployment.deleteMany({})
+  await createUser()
 })
 
 describe('/api/deployments' ,() => {
@@ -62,7 +63,7 @@ describe('/api/deployments' ,() => {
           username: 'testusername',
           password: 'testpassword'
         })
-        
+      
       token = result.body.token
     })
 
@@ -74,7 +75,6 @@ describe('/api/deployments' ,() => {
         .expect(200)
       
       const deployment = result.body.deployment
-      console.log(deployment)
       expect({...deployment, deployedAt: mongooseDateToYYYYMMDD(deployment.deployedAt)}).toMatchObject(toCreate)
     })
 
@@ -88,6 +88,4 @@ describe('/api/deployments' ,() => {
   })
 })
 
-afterAll(() => {
-  mongoose.connection.close()
-})
+afterAll(async () => await mongoose.connection.close())
