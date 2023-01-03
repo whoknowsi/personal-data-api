@@ -11,7 +11,6 @@ beforeAll(async () => {
 })
 
 describe('/api/auth', () => {
-
   describe('/login', () => {
     const url = '/api/auth/login'
 
@@ -23,8 +22,8 @@ describe('/api/auth', () => {
           password: 'testpassword'
         })
         .expect(200)
-      
-        expect(Object.keys(response.body)[0]).toBe('token')
+
+      expect(Object.keys(response.body)[0]).toBe('token')
     })
 
     test("can't login with incorrect username", async () => {
@@ -47,10 +46,10 @@ describe('/api/auth', () => {
         .expect(401)
     })
   })
-  
+
   describe('/register', () => {
     const url = '/api/auth/register'
-    
+
     test('can sign up if no User is on database', async () => {
       await User.deleteMany({})
       const savedUser = await api

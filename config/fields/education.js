@@ -1,3 +1,5 @@
+const { checkIfItIsADate } = require('../../utils/helpers')
+
 module.exports = {
   school: {
     type: 'String',
@@ -8,13 +10,13 @@ module.exports = {
     enum: [
       "Bachelor's degree",
       "Master's degree",
-      "Doctorate degree",
+      'Doctorate degree',
       "Associate's degree",
-      "Technical degree",
-      "Technical diploma",
-      "Professional certification",
-      "High school diploma",
-      "Baccalaureate diploma"
+      'Technical degree',
+      'Technical diploma',
+      'Professional certification',
+      'High school diploma',
+      'Baccalaureate diploma'
     ],
     required: true
   },
@@ -22,11 +24,19 @@ module.exports = {
     type: 'String'
   },
   startDate: {
-    type: 'Date',
+    type: 'String',
+    validate: {
+      validator: checkIfItIsADate,
+      message: 'Provided date is invalid'
+    },
     required: true
   },
   endDate: {
-    type: 'Date'
+    type: 'String',
+    validate: {
+      validator: checkIfItIsADate,
+      message: 'Provided date is invalid'
+    }
   },
   grade: {
     type: 'Number'

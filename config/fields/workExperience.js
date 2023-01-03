@@ -1,3 +1,5 @@
+const { checkIfItIsADate } = require('../../utils/helpers')
+
 module.exports = {
   company: {
     type: 'String'
@@ -23,12 +25,12 @@ module.exports = {
   location: {
     type: {
       city: {
-        type: 'String',
+        type: 'String'
       },
       country: {
-        type: 'String',
-      },
-    },
+        type: 'String'
+      }
+    }
   },
   locationType: {
     type: 'String',
@@ -40,11 +42,19 @@ module.exports = {
     required: true
   },
   startDate: {
-    type: 'Date',
+    type: 'String',
+    validate: {
+      validator: checkIfItIsADate,
+      message: 'Provided date is invalid'
+    },
     required: true
   },
   endDate: {
-    type: 'Date'
+    type: 'String',
+    validate: {
+      validator: checkIfItIsADate,
+      message: 'Provided date is invalid'
+    }
   },
   responsabilities: [
     {

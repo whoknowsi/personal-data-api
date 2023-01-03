@@ -1,3 +1,5 @@
+const { checkIfItIsADate } = require('../../utils/helpers')
+
 module.exports = {
   name: {
     type: 'String',
@@ -8,7 +10,11 @@ module.exports = {
     required: true
   },
   createdAt: {
-    type: 'Date',
+    type: 'String',
+    validate: {
+      validator: checkIfItIsADate,
+      message: 'Provided date is invalid'
+    },
     required: true
   },
   status: {
@@ -35,7 +41,7 @@ module.exports = {
   },
   media: [
     {
-    type: 'String'
+      type: 'String'
     }
   ],
   client: {
