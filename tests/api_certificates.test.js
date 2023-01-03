@@ -4,7 +4,7 @@ const app = require('../app')
 const api = supertest(app)
 const Certificate = require('../models/certificate')
 const { mongooseDateToYYYYMMDD } = require('../utils/helpers')
-const { createUser } = require('./test_helpers')
+const { createUser, getNonExistingId } = require('./test_helpers')
 
 let token = null
 let idToManage = null
@@ -54,6 +54,30 @@ describe('/api/certificates', () => {
     expect({...certificate, issueDate: mongooseDateToYYYYMMDD(certificate.issueDate)}).toMatchObject(initialCertificate)
   })
 
+  test('can get a specific certificate if id provided is correct', async () => {
+    const result = await api
+      .get(`${url}/${idToManage}`)
+      .expect(200)
+    
+    const certificate = result.body.certificate
+    expect(certificate._id.valueOf()).toBe(idToManage)
+  })
+
+  test('return a 404 status with message "Certificate not found" if id provied is invalid', async () => {
+    const nonExistingId = await getNonExistingId(new Certificate(initialCertificate))
+    const result = await api
+      .get(`${url}/${nonExistingId}`)
+      .expect(404)
+
+    expect(result.body.message).toBe("Certificate not found")
+  })
+
+  test('return a 400 status if id es malformed', async () => {
+    await api
+      .get(`${url}/malformedId`)
+      .expect(400)
+  })
+
   describe('when user is not logged in', () => {
     test("can't create a certificate", async () => {
       await api
@@ -66,6 +90,12 @@ describe('/api/certificates', () => {
       await api
       .put(`${url}/${idToManage}`)
       .send(toUpdate)
+      .expect(401)
+    })
+
+    test("can't delete a certificate", async () => {
+      await api
+      .delete(`${url}/${idToManage}`)
       .expect(401)
     })
   })
@@ -133,13 +163,39 @@ describe('/api/certificates', () => {
             .expect(200)
         })
       })
-      describe('and the certificates does not exists (provided id is correct)', () => {
+      describe('and the certificates does not exists (provided id id not correct)', () => {
         test("responds with status 400", async () => {
           await api
             .put(`${url}/badId`)
             .send(toUpdate)
             .set('Authorization', `Bearer ${token}`)
             .expect(400)
+        })
+      })
+    })
+
+    describe('when trying to delete a certificate', () => {
+      describe('and the certificates does not exists (provided id is not correct)', () => {
+        test("respons with status 400", async () => {
+          await api
+            .delete(`${url}/badId`)
+            .set('Authorization', `Bearer ${token}`)
+            .expect(400)
+        })
+      })
+      describe('and the certificates exists (provided id is correct)', () => {
+        test("the certificate is deleted", async () => {
+          const responseBeforeDelete = await api
+            .get(url)
+          
+          await api
+            .delete(`${url}/${idToManage}`)
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200)
+          
+          const responseAfterDelete = await api
+            .get(url)
+          expect(responseAfterDelete.body.certificates.length).toBe(responseBeforeDelete.body.certificates.length - 1)
         })
       })
     })

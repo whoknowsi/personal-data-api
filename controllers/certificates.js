@@ -7,6 +7,18 @@ router.get('/', async (req, res) => {
   res.status(200).json({ certificates: certificates })
 })
 
+router.get('/:id', async (req, res) => {
+  const id = req.params.id
+  try {
+    const foundCertificate = await Certificate.findById(id)
+    foundCertificate
+      ? res.status(200).json({ certificate: foundCertificate })
+      : res.status(404).json({ message: 'Certificate not found' })
+  } catch (error) {
+    res.status(400).json(error)
+  }
+})
+
 router.post('/', checkAuthentication, async (req, res) => {
   const newCertificate = new Certificate({ ...req.body })
 
@@ -25,6 +37,17 @@ router.put('/:id', checkAuthentication, async (req, res) => {
   try {
     const updatedCertificate = await Certificate.findByIdAndUpdate(certificateId, toUpdate, { new: true, runValidators: true })
     res.status(200).json({ certificate: updatedCertificate })
+  } catch (error) {
+    res.status(400).json(error)
+  }
+})
+
+router.delete('/:id', checkAuthentication, async (req, res) => {
+  const certificateId = req.params.id
+
+  try {
+    const deletedCertificate = await Certificate.findByIdAndDelete(certificateId)
+    res.status(200).json({ certificate: deletedCertificate })
   } catch (error) {
     res.status(400).json(error)
   }

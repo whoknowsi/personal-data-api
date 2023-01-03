@@ -14,6 +14,14 @@ const createUser = async () => {
   await newUser.save()
 }
 
+const getNonExistingId = async (toSave) => {
+  await toSave.save()
+	await toSave.remove()
+
+	return toSave._id.valueOf()
+}
+
 module.exports = {
-  createUser
+  createUser,
+  getNonExistingId
 }
