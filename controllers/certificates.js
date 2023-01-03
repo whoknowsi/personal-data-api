@@ -12,7 +12,19 @@ router.post('/', checkAuthentication, async (req, res) => {
 
   try {
     const savedCertificate = await newCertificate.save()
-    res.status(200).json({ certificate: savedCertificate })
+    res.status(201).json({ certificate: savedCertificate })
+  } catch (error) {
+    res.status(400).json(error)
+  }
+})
+
+router.put('/:id', checkAuthentication, async (req, res) => {
+  const certificateId = req.params.id
+  const toUpdate = req.body
+
+  try {
+    const updatedCertificate = await Certificate.findByIdAndUpdate(certificateId, toUpdate, { new: true, runValidators: true })
+    res.status(200).json({ certificate: updatedCertificate })
   } catch (error) {
     res.status(400).json(error)
   }

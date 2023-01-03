@@ -7,6 +7,7 @@ const { mongooseDateToYYYYMMDD } = require('../utils/helpers')
 const { createUser } = require('./test_helpers')
 
 let token = null
+let idToManage = null
 
 beforeAll(async () => {
   await Certificate.deleteMany({})
@@ -34,9 +35,14 @@ describe('/api/certificates', () => {
     credentialURL: "https://studies.cs.helsinki.fi/stats/api/certificate/fullstackopen/en/867a851012773dbe7db3d5d71c333a8a"
   }
 
+  const toUpdate = {
+    name: "Firebase certificate"
+  }
+
   beforeAll(async () => {
     const certificate = new Certificate(initialCertificate)
-    await certificate.save()
+    const savedCertificate = await certificate.save()
+    idToManage = savedCertificate._id.valueOf()
   })
 
   test('can get all certificates', async () => {
@@ -55,6 +61,13 @@ describe('/api/certificates', () => {
         .send(toCreate)
         .expect(401)
     })
+
+    test("can't update a certificate", async () => {
+      await api
+      .put(`${url}/${idToManage}`)
+      .send(toUpdate)
+      .expect(401)
+    })
   })
   describe('when user is logged in', () => {
 
@@ -69,23 +82,66 @@ describe('/api/certificates', () => {
       token = result.body.token
     })
 
-    test("can create a certificate is the data provided is correct", async () => {
-      const result = await api
-        .post(url)
-        .send(toCreate)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(200)
-      
-      const certificate = result.body.certificate
-      expect({...certificate, issueDate: mongooseDateToYYYYMMDD(certificate.issueDate)}).toMatchObject(toCreate)
+    describe('when trying to create a certificate', () => {
+      test("can be created is the data provided is correct", async () => {
+        const result = await api
+          .post(url)
+          .send(toCreate)
+          .set('Authorization', `Bearer ${token}`)
+          .expect(201)
+        
+        const certificate = result.body.certificate
+        expect({...certificate, issueDate: mongooseDateToYYYYMMDD(certificate.issueDate)}).toMatchObject(toCreate)
+      })
+  
+      test("can't be created if data is not correct (missing or invalidad fields)", async () => {
+        await api
+          .post(url)
+          .send({})
+          .set('Authorization', `Bearer ${token}`)
+          .expect(400)
+      })
     })
 
-    test("can't create a certificate if data is not correct (missing or invalidad fields)", async () => {
-      await api
-        .post(url)
-        .send({})
-        .set('Authorization', `Bearer ${token}`)
-        .expect(400)
+    describe('when updating a certificate', () => {
+      describe('and the certificates exists (provided id is correct)', () => {
+        test("updates the certificate if data sent is correct", async () => {
+          await api
+            .put(`${url}/${idToManage}`)
+            .send(toUpdate)
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200)
+        })
+    
+        test("no updates the certificate if data types is not correct", async () => {
+          await api
+            .put(`${url}/${idToManage}`)
+            .send({
+              name: ["hola"]
+            })
+            .set('Authorization', `Bearer ${token}`)
+            .expect(400)
+        })
+    
+        test("there is no changes if data is not on schema or nothing is sent", async () => {
+          await api
+            .put(`${url}/${idToManage}`)
+            .send({
+              notInSchema: "Nothing"
+            })
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200)
+        })
+      })
+      describe('and the certificates does not exists (provided id is correct)', () => {
+        test("responds with status 400", async () => {
+          await api
+            .put(`${url}/badId`)
+            .send(toUpdate)
+            .set('Authorization', `Bearer ${token}`)
+            .expect(400)
+        })
+      })
     })
   })
 })
