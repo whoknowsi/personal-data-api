@@ -2,9 +2,6 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const morgan = require('morgan')
-const mongoose = require('mongoose')
-
-const { DB_URI } = require('./config/config')
 
 const middlewares = require('./utils/middlewares')
 
@@ -16,10 +13,10 @@ const projectsRouter = require('./controllers/projects')
 const fieldsRouter = require('./controllers/fields')
 const authRouter = require('./controllers/auth')
 
-mongoose.set('strictQuery', false)
-mongoose.connect(DB_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((error) => console.log('Failed to connect to MongoDB', error))
+const { DB_URI } = require('./config/config')
+const connectToDatabase = require('./db')
+
+connectToDatabase(DB_URI)
 
 app.use(cors())
 app.use(express.json())

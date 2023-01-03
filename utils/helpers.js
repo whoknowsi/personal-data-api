@@ -9,6 +9,7 @@ const mongooseDateToYYYYMMDD = (date) => {
 
 const getRandomFromArray = (array) => array[Math.floor(Math.random() * array.length)]
 
-const toCamelCase = (value) => value.replace(/([-_]\w)/g, (m) => m[1].toUpperCase())
+const toCamelCase = (value) => value.replace(/([-_]\w)/g, returnLetterWithALeftScoreToUpperCase)
+const returnLetterWithALeftScoreToUpperCase = (charWithScoreOnLeft) => charWithScoreOnLeft[1].toUpperCase()
 
-module.exports = { mongooseDateToYYYYMMDD, getRandomFromArray, toCamelCase }
+module.exports = { mongooseDateToYYYYMMDD, getRandomFromArray, toCamelCase, returnLetterWithALeftScoreToUpperCase }
