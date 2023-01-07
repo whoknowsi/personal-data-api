@@ -46,8 +46,7 @@ module.exports = {
     number: {
       type: 'Number',
       required: true
-    },
-    required: true
+    }
   },
   email: {
     type: 'String',
