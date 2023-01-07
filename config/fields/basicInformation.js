@@ -35,7 +35,18 @@ module.exports = {
     required: true
   },
   phone: {
-    type: 'Number',
+    countryCode: {
+      type: 'Number',
+      required: true
+    },
+    areaCode: {
+      type: 'Number',
+      required: true
+    },
+    number: {
+      type: 'Number',
+      required: true
+    },
     required: true
   },
   email: {
