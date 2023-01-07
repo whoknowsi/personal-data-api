@@ -9,6 +9,10 @@ module.exports = {
     type: 'String',
     required: true
   },
+  nickName: {
+    type: 'String',
+    required: true
+  },
   description: [
     {
       type: 'String'
@@ -31,7 +35,18 @@ module.exports = {
     required: true
   },
   phone: {
-    type: 'Number',
+    countryCode: {
+      type: 'Number',
+      required: true
+    },
+    areaCode: {
+      type: 'Number',
+      required: true
+    },
+    number: {
+      type: 'Number',
+      required: true
+    },
     required: true
   },
   email: {
@@ -50,7 +65,14 @@ module.exports = {
   ],
   lenguages: [
     {
-      type: 'String'
+      lenguage: {
+        type: 'String',
+        required: true
+      },
+      level: {
+        type: 'String',
+        required: true
+      }
     }
   ],
   CV: {
