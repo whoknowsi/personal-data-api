@@ -8,8 +8,8 @@ router.get('/', async (req, res, next) => {
 })
 
 router.post('/', checkAuthentication, async (req, res, next) => {
-  const foundBasicInformation = BasicInformation.findOne({})
-  if (foundBasicInformation) return next()
+  const foundBasicInformation = await BasicInformation.findOne({})
+  if (foundBasicInformation) return res.status(400).json({ message: 'Basic information data already exists' })
 
   const newBasicInformation = new BasicInformation({ ...req.body })
 
