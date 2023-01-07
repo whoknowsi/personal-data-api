@@ -19,7 +19,7 @@ module.exports = {
     }
   ],
   dateOfBirth: {
-    type: 'Date',
+    type: 'String',
     validate: {
       validator: checkIfItIsADate,
       message: 'Provided date is invalid'
