@@ -22,11 +22,14 @@ This API allows users to make GET requests to retrieve personal data, as well as
 
 The API has the following dynamic endpoints:
 
-- `/api/:endpoint/fields`: Returns a list of fields for the specified data model.
-- `/api/:endpoint/fields/:field`: Returns the specified field for the specified data model.
-- `/api/:endpoint`: Returns all data for the specified data model.
-- `/api/auth/login`: Allows users to log in with their username and password.
-- `/api/auth/register`: Allows the owner to register as a user (restricted to one user).
+- `/:endpoint/fields`: Returns a list of fields for the specified data model.
+- `/:endpoint/fields/:field`: Returns the specified field for the specified data model.
+- `/:endpoint`: Returns all data for the specified data model.
+- `/basic-information`
+- `/auth/login`: Allows users to log in with their username and password.
+- `/auth/register`: Allows the owner to register as a user (restricted to one user).
+
+![Api public endpoints](screenshots/endpoints.png)
 
 ### Parameters
 
