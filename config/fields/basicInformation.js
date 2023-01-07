@@ -9,6 +9,10 @@ module.exports = {
     type: 'String',
     required: true
   },
+  nickName: {
+    type: 'String',
+    required: true
+  },
   description: [
     {
       type: 'String'
