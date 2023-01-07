@@ -65,7 +65,14 @@ module.exports = {
   ],
   lenguages: [
     {
-      type: 'String'
+      lenguage: {
+        type: 'String',
+        required: true
+      },
+      level: {
+        type: 'String',
+        required: true
+      }
     }
   ],
   CV: {
