@@ -4,6 +4,7 @@ const educations = require('./fields/education')
 const projects = require('./fields/project')
 const users = require('./fields/user')
 const workExperiences = require('./fields/workExperience')
+const basicInformations = require('./fields/basicInformation')
 
 module.exports = {
   certificates,
@@ -11,5 +12,6 @@ module.exports = {
   educations,
   projects,
   users,
-  workExperiences
+  workExperiences,
+  basicInformations
 }

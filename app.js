@@ -9,6 +9,7 @@ const fieldsRouter = require('./controllers/fields')
 const authRouter = require('./controllers/auth')
 const dataRouter = require('./controllers/dataRouter')
 const endpointsRouter = require('./controllers/endpoints.js')
+const basicInformationRouter = require('./controllers/basicInformation.js')
 
 const { DB_URI } = require('./config/config')
 const connectToDatabase = require('./db')
@@ -24,6 +25,7 @@ app.use(middlewares.tokenExtractor)
 app.use('/', endpointsRouter)
 app.use('/:endpoint/fields', fieldsRouter)
 app.use('/:endpoint/', dataRouter)
+app.use('/basic-information', basicInformationRouter)
 app.use('/auth', authRouter)
 
 module.exports = app
