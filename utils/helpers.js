@@ -39,6 +39,8 @@ const selectCorretDataBase = (environment) => {
     : process.env.MONGO_DB_URI
 }
 
+const toKebabCase = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
+
 module.exports = {
   getRandomFromArray,
   toCamelCase,
@@ -46,5 +48,6 @@ module.exports = {
   checkIfItIsADate,
   normalizeDataIfNecessary,
   NormalizeDataIfNecessaryForMultipleData,
-  selectCorretDataBase
+  selectCorretDataBase,
+  toKebabCase
 }
