@@ -12,7 +12,7 @@ router.post('/login', async (req, res) => {
   const correctPassword = bcrypt.compareSync(password, foundUser.password)
   if (!correctPassword) return res.status(401).json({ error: 'invalid username or password' })
 
-  const token = jwt.sign({ id: foundUser.id, username: foundUser.username }, process.env.SECRET_TOKEN)
+  const token = jwt.sign({ id: foundUser.id, username: foundUser.username }, process.env.SECRET_TOKEN, { expiresIn: '7d' })
   res.status(200).json({ token })
 })
 
