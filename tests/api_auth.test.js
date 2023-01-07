@@ -10,9 +10,9 @@ beforeAll(async () => {
   await createUser()
 })
 
-describe('/api/auth', () => {
+describe('/auth', () => {
   describe('/login', () => {
-    const url = '/api/auth/login'
+    const url = '/auth/login'
 
     test('can login with correct username and password', async () => {
       const response = await api
@@ -48,7 +48,7 @@ describe('/api/auth', () => {
   })
 
   describe('/register', () => {
-    const url = '/api/auth/register'
+    const url = '/auth/register'
 
     test('can sign up if no User is on database', async () => {
       await User.deleteMany({})

@@ -14,10 +14,10 @@ const posibleEndpoints = [
   'work-experiences'
 ]
 
-describe('/api/:endpoint/fields', () => {
+describe('/:endpoint/fields', () => {
   test('can get all fields of a endpoint', async () => {
     const randomEndpoint = toCamelCase(getRandomFromArray(posibleEndpoints))
-    const url = `/api/${randomEndpoint}/fields`
+    const url = `/${randomEndpoint}/fields`
 
     const result = await api
       .get(url)
@@ -28,7 +28,7 @@ describe('/api/:endpoint/fields', () => {
 
   test('return 404 if endpoint provided does not exist', async () => {
     const badEndpoint = 'badEndpoint'
-    const url = `/api/${badEndpoint}/fields`
+    const url = `/${badEndpoint}/fields`
 
     await api
       .get(url)
@@ -39,7 +39,7 @@ describe('/api/:endpoint/fields', () => {
     test('return the correct field details if exists', async () => {
       const randomEndpoint = toCamelCase(getRandomFromArray(posibleEndpoints))
       const randomField = getRandomFromArray(Object.keys(fields[randomEndpoint]))
-      const url = `/api/${randomEndpoint}/fields/${randomField}`
+      const url = `/${randomEndpoint}/fields/${randomField}`
 
       const field = fields[randomEndpoint][randomField]
 
@@ -53,7 +53,7 @@ describe('/api/:endpoint/fields', () => {
     test('return 404 if the field provided does not exist', async () => {
       const randomEndpoint = toCamelCase(getRandomFromArray(posibleEndpoints))
       const badField = 'badField'
-      const url = `/api/${randomEndpoint}/fields/${badField}`
+      const url = `/${randomEndpoint}/fields/${badField}`
 
       await api
         .get(url)
@@ -63,7 +63,7 @@ describe('/api/:endpoint/fields', () => {
     test('return 404 if the endpoint provided does not exist', async () => {
       const randomEndpoint = 'badEndpoint'
       const badField = 'badField'
-      const url = `/api/${randomEndpoint}/fields/${badField}`
+      const url = `/${randomEndpoint}/fields/${badField}`
 
       await api
         .get(url)

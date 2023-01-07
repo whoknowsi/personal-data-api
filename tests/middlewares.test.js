@@ -5,7 +5,7 @@ const api = supertest(app)
 
 test('return 401 if user token is malformed', async () => {
   const result = await api
-    .post('/api/certificates/')
+    .post('/certificates/')
     .set('Authorization', 'Bearer fakeToken')
     .expect(401)
 
@@ -14,7 +14,7 @@ test('return 401 if user token is malformed', async () => {
 
 test('return 401 if user token is invalid', async () => {
   const result = await api
-    .post('/api/certificates/')
+    .post('/certificates/')
     .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBlcnNvbmEtZGF0YS1hcGkiLCJpYXQiOjE2NzI3MDc1NjF9.eFwkkJOPwkJg33usfxat6mV_gi_xOrURaJd8LnIUEYE')
     .expect(401)
 

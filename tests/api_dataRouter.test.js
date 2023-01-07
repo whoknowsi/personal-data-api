@@ -35,7 +35,7 @@ describe.each((Object.values(dataModels)))('test', (Model) => {
   beforeAll(async () => {
     dataName = Model.collection.modelName.replace(/^./, (m) => m.toLowerCase())
     endpoint = fromCameCaseToSnakeCase(dataName + 's')
-    url = `/api/${endpoint}`
+    url = `/${endpoint}`
     initialData = allInitialData[dataName]
     dataToCreate = allDataToCreate[dataName]
     dataToUpdate = allDataToUpdate[dataName]
@@ -48,13 +48,13 @@ describe.each((Object.values(dataModels)))('test', (Model) => {
   describe('using GET method', () => {
     test('return 404 if endpoint is invalid', async () => {
       await api
-        .get('/api/badEndpoint')
+        .get('/badEndpoint')
         .expect(404)
     })
 
     test('return 404 if endpoint is invalid when trying to get specific item', async () => {
       await api
-        .get(`/api/badEndpoint/${idOfInitialData}`)
+        .get(`/badEndpoint/${idOfInitialData}`)
         .expect(404)
     })
 
@@ -118,7 +118,7 @@ describe.each((Object.values(dataModels)))('test', (Model) => {
   describe('when user is logged in', () => {
     beforeAll(async () => {
       const result = await api
-        .post('/api/auth/login')
+        .post('/auth/login')
         .send({
           username: 'testusername',
           password: 'testpassword'
@@ -130,21 +130,21 @@ describe.each((Object.values(dataModels)))('test', (Model) => {
     describe('if endpoint is invalid return 404', () => {
       test('POST method', async () => {
         await api
-          .post('/api/badEndpoint')
+          .post('/badEndpoint')
           .set('Authorization', `Bearer ${token}`)
           .expect(404)
       })
 
       test('PUT method', async () => {
         await api
-          .put(`/api/badEndpoint/${idOfInitialData}`)
+          .put(`/badEndpoint/${idOfInitialData}`)
           .set('Authorization', `Bearer ${token}`)
           .expect(404)
       })
 
       test('DELETE method', async () => {
         await api
-          .delete(`/api/badEndpoint/${idOfInitialData}`)
+          .delete(`/badEndpoint/${idOfInitialData}`)
           .set('Authorization', `Bearer ${token}`)
           .expect(404)
       })
