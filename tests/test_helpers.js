@@ -26,6 +26,15 @@ const fromCameCaseToSnakeCase = str => str.replace(/[A-Z]/g, letter => `-${lette
 const allInitialData = {
   certificate: {
     name: 'Firebase',
+    description: `This certificate certifies that the holder has successfully completed a 
+    Platzi course on the fundamentals of Firebase. The course included the implementation
+    of Firebase services on a website, knowledge of the web management console, authentication
+    and creation of users through social networks, and deployment of web applications to Firebase
+    hosting. Additionally, the holder completed a practical project called PlatziBlog, in which
+    javascript vanilla, html, and css were used to implement features such as user authentication
+    through email and password, Google, Facebook, and Twitter, as well as the use of Firebase messaging
+    for push notifications, Firebase storage for storing images and Firebase hosting for deploying the
+    application. Furthermore, Firebase rules were implemented to protect both the database and the storage.`,
     expires: false,
     issueDate: '01/12/2022',
     issuingOrganization: 'Platzi',
@@ -81,6 +90,13 @@ const allInitialData = {
 const allDataToCreate = {
   certificate: {
     name: 'Full Stack Open',
+    description: `This certificate certifies that the holder has successfully completed the 
+    Fullstack Open course at the University of Helsinki. The course covered web application
+    fundamentals, including an introduction to React and how to communicate with a server
+    using NodeJS and Express. It also covered server programming, testing, user administration,
+    and state management with Redux. Additionally, the course covered topics such as React router,
+    custom hooks, styling with CSS and webpack. This course covered the necessary skills to be a
+    full-stack developer, and the certificate is a proof of the knowledge and skills acquired in the course.`,
     expires: false,
     issueDate: '01/11/2022',
     issuingOrganization: 'University of Helsinki',

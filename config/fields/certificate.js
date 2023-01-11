@@ -5,6 +5,10 @@ module.exports = {
     type: 'String',
     required: true
   },
+  description: {
+    type: 'String',
+    required: true
+  },
   issuingOrganization: {
     type: 'String',
     required: true
