@@ -1,9 +1,16 @@
-const http = require('http')
-const app = require('./app')
-const { PORT } = require('./config/config')
+import { Hono } from 'hono'
+import { serveStatic } from 'hono/cloudflare-workers'
+import { cors } from 'hono/cors'
+const app = new Hono()
 
-const server = http.createServer(app)
+app.use('/*', cors())
 
-server.listen(PORT, () => {
-  console.log(`App listening on port: ${PORT}`)
+app.get('/testing', (c) => {
+  return c.json({
+    ok: '200'
+  })
 })
+
+app.get('/static/*', serveStatic({ root: './' }))
+
+export default app

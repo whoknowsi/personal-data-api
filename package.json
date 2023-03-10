@@ -1,42 +1,35 @@
 {
   "name": "personal-data-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "This API allows users to make GET requests to retrieve personal data, as well as allowing the owner to create, update, and delete data through POST, PUT, and DELETE requests, respectively.",
   "main": "index.js",
-  "engines": {
-    "node": "18.x"
-  },
+  "type": "module",
   "scripts": {
-    "build": "netlify-lambda build .",
-    "dev": "cross-env NODE_ENV=development nodemon index.js",
-    "start": "cross-env NODE_ENV=production node index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
-    "test:coverage": "jest --runInBand --coverage",
-    "test:start": "cross-env NODE_ENV=test node index.js"
+    "dev": "wrangler dev index.js --local",
+    "publish": "wrangler publish index.js"
   },
-  "author": "whoknowsi",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whoknowsi/personal-data-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whoknowsi/personal-data-api/issues"
+  },
+  "homepage": "https://github.com/whoknowsi/personal-data-api#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
+    "hono": "^3.0.3",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.8.2"
+    "mongoose": "^7.0.1"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
-    "eslint": "^8.31.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^27.2.0",
-    "eslint-plugin-n": "^15.6.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "jest": "^29.3.1",
+    "eslint": "^8.35.0",
     "morgan": "^1.10.0",
-    "netlify-lambda": "^2.0.16",
-    "nodemon": "^2.0.20",
-    "serverless-http": "^3.1.1",
-    "supertest": "^6.3.3"
+    "prettier": "^2.8.4",
+    "standard": "^17.0.0",
+    "wrangler": "^2.12.2"
   }
 }
