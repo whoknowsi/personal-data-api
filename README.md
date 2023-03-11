@@ -22,12 +22,12 @@ This API allows users to make GET requests to retrieve personal data, as well as
 
 The API has the following dynamic endpoints:
 
-- `/:endpoint/fields`: Returns a list of fields for the specified data model.
-- `/:endpoint/fields/:field`: Returns the specified field for the specified data model.
-- `/:endpoint`: Returns all data for the specified data model.
-- `/basic-information`
-- `/auth/login`: Allows users to log in with their username and password.
-- `/auth/register`: Allows the owner to register as a user (restricted to one user).
+- `/.netlify/functions/api/:endpoint/fields`: Returns a list of fields for the specified data model.
+- `/.netlify/functions/api/:endpoint/fields/:field`: Returns the specified field for the specified data model.
+- `/.netlify/functions/api/:endpoint`: Returns all data for the specified data model.
+- `/.netlify/functions/api/basic-information`
+- `/.netlify/functions/api/auth/login`: Allows users to log in with their username and password.
+- `/.netlify/functions/api/auth/register`: Allows the owner to register as a user (restricted to one user).
 
 ![Api public endpoints](screenshots/endpoints.png)
 
@@ -58,7 +58,8 @@ This API is built using Node.js and the Express framework. It uses `bcrypt` for 
 - `MONGO_DB_URI`: The MongoDB connection URI for production.
 - `MONGO_TEST_DB_URI`: The MongoDB connection URI for testing.
 - `PORT`: The port to run the API on.
-- `SECRET_TOKEN`: A secret token used to encrypt and decrypt passwords.
+- `SECRET_TOKEN`: A secret token used to encrypt and decrypt passwords and tokens.
+- `BASE_PATH`: The base path to parse the endpoints correctly
 
 ## Installation
 
@@ -90,7 +91,7 @@ Here are some examples of different types of requests using the `fetch` function
 To retrieve all data for a particular model:
 
 ```javascript
-fetch('http://localhost:3000/api/deployments')
+fetch('http://localhost:3000/.netlify/functions/api/deployments')
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(error => console.error(error))
@@ -99,7 +100,7 @@ fetch('http://localhost:3000/api/deployments')
 To retrieve a single item by ID:
 
 ```javascript
-fetch('http://localhost:3000/api/deployments/5f5d7b7e3ef8b346501d891c')
+fetch('http://localhost:3000/.netlify/functions/api/deployments/5f5d7b7e3ef8b346501d891c')
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(error => console.error(error))
@@ -110,7 +111,7 @@ fetch('http://localhost:3000/api/deployments/5f5d7b7e3ef8b346501d891c')
 To create a new item, first log in to obtain a JWT token:
 
 ```javascript
-fetch('http://localhost:3000/api/auth/login', {
+fetch('http://localhost:3000/.netlify/functions/api/auth/login', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -128,7 +129,7 @@ fetch('http://localhost:3000/api/auth/login', {
 Then include the token in the Authorization header and make the POST request:
 
 ```javascript
-fetch('http://localhost:3000/api/deployments', {
+fetch('http://localhost:3000"/.netlify/functions/api/deployments', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -149,7 +150,7 @@ fetch('http://localhost:3000/api/deployments', {
 To update an existing item, first log in to obtain a JWT token, then include the token in the ``Authorization`` header and make the PUT request:
 
 ```javascript
-fetch('http://localhost:3000/api/deployments/5f5d7b7e3ef8b346501d891c', {
+fetch('http://localhost:3000/.netlify/functions/api/deployments/5f5d7b7e3ef8b346501d891c', {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
@@ -169,7 +170,7 @@ fetch('http://localhost:3000/api/deployments/5f5d7b7e3ef8b346501d891c', {
 To delete an existing item, first log in to obtain a JWT token, then include the token in the ``Authorization`` header and make the DELETE request:
 
 ```javascript
-fetch('http://localhost:3000/api/deployments/5f5d7b7e3ef8b346501d891c', {
+fetch('http://localhost:3000/.netlify/functions/api/deployments/5f5d7b7e3ef8b346501d891c', {
   method: 'DELETE',
   headers: {
     'Content-Type': 'application/json',
