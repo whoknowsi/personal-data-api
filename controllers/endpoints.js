@@ -4,13 +4,13 @@ const { toKebabCase } = require('../utils/helpers')
 
 router.get('/', async (req, res) => {
   const dataEndpoints = Object.keys(dataModels).map((endpoint) => ({
-    endpoint: `/${toKebabCase(endpoint)}`
+    endpoint: `${process.env.BASE_PATH}/${toKebabCase(endpoint)}`
   }
   ))
   res.status(200).json([
     ...dataEndpoints,
     {
-      endpoint: '/basic-information'
+      endpoint: process.env.BASE_PATH + '/basic-information'
     }
   ])
 })
