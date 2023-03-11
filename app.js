@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const morgan = require('morgan')
-const serverless = require('serverless-http')
 
 const middlewares = require('./utils/middlewares')
 
@@ -31,4 +30,3 @@ app.use('/basic-information', basicInformationRouter)
 app.use('/auth', authRouter)
 
 module.exports = app
-module.exports.handler = serverless(app)
