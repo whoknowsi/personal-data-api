@@ -21,15 +21,16 @@ connectToDatabase(DB_URI)
 app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))
-app.use('/static', express.static('public'))
+
+router.use('/auth', authRouter)
+router.use('/', endpointsRouter)
 
 app.use(middlewares.tokenExtractor)
 
-router.use('/', endpointsRouter)
 router.use('/:endpoint/fields', fieldsRouter)
 router.use('/:endpoint/', dataRouter)
 router.use('/basic-information', basicInformationRouter)
-router.use('/auth', authRouter)
 
 app.use('/.netlify/functions/api', router)
 module.exports.handler = serverless(app)
+process.env.NODE_ENV === 'development' && (module.exports = app)
