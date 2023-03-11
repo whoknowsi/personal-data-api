@@ -41,6 +41,14 @@ const selectCorretDataBase = (environment) => {
 
 const toKebabCase = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
 
+const parseId = (obj) => {
+  const { _id, __v, ...rest } = JSON.parse(JSON.stringify(obj))
+  return {
+    ...rest,
+    id: _id.toString()
+  }
+}
+
 module.exports = {
   getRandomFromArray,
   toCamelCase,
@@ -49,5 +57,6 @@ module.exports = {
   normalizeDataIfNecessary,
   NormalizeDataIfNecessaryForMultipleData,
   selectCorretDataBase,
-  toKebabCase
+  toKebabCase,
+  parseId
 }

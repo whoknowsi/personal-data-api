@@ -1,10 +1,12 @@
 const router = require('express').Router()
 const BasicInformation = require('../models/basicInformation')
 const { checkAuthentication } = require('../utils/middlewares')
+const { parseId } = require('../utils/helpers')
 
 router.get('/', async (req, res, next) => {
   const result = await BasicInformation.findOne({})
-  res.status(200).json({ result, status: 200 })
+  const parsedResult = parseId(result)
+  res.status(200).json({ result: parsedResult, status: 200 })
 })
 
 router.post('/', checkAuthentication, async (req, res, next) => {

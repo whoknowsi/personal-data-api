@@ -1,6 +1,6 @@
 const router = require('express').Router({ mergeParams: true })
 const dataModels = require('../models/dataModels')
-const { toCamelCase } = require('../utils/helpers')
+const { toCamelCase, parseId } = require('../utils/helpers')
 const { checkAuthentication } = require('../utils/middlewares')
 
 router.get('/', async (req, res, next) => {
@@ -10,7 +10,8 @@ router.get('/', async (req, res, next) => {
   if (!DataModel) return next()
 
   const results = await DataModel.find({})
-  res.status(200).json({ results, status: 200 })
+  const parsedResults = results.map((result) => parseId(result))
+  res.status(200).json({ results: parsedResults, status: 200 })
 })
 
 router.get('/:id', async (req, res, next) => {
@@ -23,7 +24,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const foundResult = await DataModel.findById(id)
     foundResult
-      ? res.status(200).json({ result: foundResult })
+      ? res.status(200).json({ result: parseId(foundResult) })
       : res.status(404).json({ message: `${DataModel.collection.modelName} not found` })
   } catch (error) {
     res.status(400).json(error)
