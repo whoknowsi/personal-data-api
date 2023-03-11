@@ -18,7 +18,8 @@
     "crypto-js": "^4.1.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.8.2"
+    "mongoose": "^6.8.2",
+    "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
