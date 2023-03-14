@@ -1,6 +1,6 @@
 const { checkIfItIsADate } = require('../../utils/helpers')
 
-module.exports = {
+const basicModel = {
   company: {
     type: 'String'
   },
@@ -66,4 +66,9 @@ module.exports = {
       type: 'String'
     }
   ]
+}
+
+module.exports = {
+  en: basicModel,
+  es: basicModel
 }

@@ -1,6 +1,6 @@
 const { checkIfItIsADate } = require('../../utils/helpers')
 
-module.exports = {
+const basicModel = {
   name: {
     type: 'String',
     required: true
@@ -23,4 +23,9 @@ module.exports = {
       message: 'Provided date is invalid'
     }
   }
+}
+
+module.exports = {
+  en: basicModel,
+  es: basicModel
 }

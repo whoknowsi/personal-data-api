@@ -1,6 +1,6 @@
 const { checkIfItIsADate } = require('../../utils/helpers')
 
-module.exports = {
+const basicModel = {
   school: {
     type: 'String',
     required: true
@@ -16,7 +16,12 @@ module.exports = {
       'Technical diploma',
       'Professional certification',
       'High school diploma',
-      'Baccalaureate diploma'
+      'Baccalaureate diploma',
+      'Licenciatura',
+      'Maestría',
+      'Doctorado',
+      'Posgrado',
+      'Tecnicatura'
     ],
     required: true
   },
@@ -62,4 +67,9 @@ module.exports = {
       type: 'String'
     }
   ]
+}
+
+module.exports = {
+  en: basicModel,
+  es: basicModel
 }

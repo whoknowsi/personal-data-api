@@ -38,9 +38,21 @@ describe.each((Object.values(dataModels)))('test', (Model) => {
     dataName = Model.collection.modelName.replace(/^./, (m) => m.toLowerCase())
     endpoint = fromCameCaseToSnakeCase(dataName + 's')
     url = BASE_API_URL + `/${endpoint}`
-    initialData = allInitialData[dataName]
-    dataToCreate = allDataToCreate[dataName]
-    dataToUpdate = allDataToUpdate[dataName]
+    initialData = {
+      en: allInitialData.en[dataName],
+      es: allInitialData.es[dataName]
+    }
+
+    dataToCreate = {
+      en: allDataToCreate.en[dataName],
+      es: allDataToCreate.es[dataName]
+    }
+    dataToUpdate = {
+      en: allDataToUpdate.en[dataName],
+      es: allDataToUpdate.es[dataName]
+    }
+
+    console.log(dataToUpdate)
 
     const data = new Model(initialData)
     const savedData = await data.save()

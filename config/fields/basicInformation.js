@@ -1,6 +1,6 @@
 const { checkIfItIsADate } = require('../../utils/helpers')
 
-module.exports = {
+const basicModel = {
   name: {
     type: 'String',
     required: true
@@ -78,4 +78,9 @@ module.exports = {
     type: 'String',
     required: true
   }
+}
+
+module.exports = {
+  en: basicModel,
+  es: basicModel
 }
