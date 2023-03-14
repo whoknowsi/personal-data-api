@@ -1,11 +1,12 @@
-const bcrypt = require('bcrypt')
+const CryptoJS = require('crypto-js')
 const User = require('../models/user')
 
 const createUser = async () => {
   const foundUser = await User.findOne({})
   if (foundUser) return
 
-  const passwordHash = await bcrypt.hash('testpassword', 10)
+  const testPassword = 'testpassword'
+  const passwordHash = CryptoJS.AES.encrypt(testPassword, process.env.SECRET_TOKEN).toString()
   const newUser = new User({
     username: 'testusername',
     password: passwordHash

@@ -13,7 +13,7 @@ const dataRouter = require('../controllers/dataRouter')
 const endpointsRouter = require('../controllers/endpoints.js')
 const basicInformationRouter = require('../controllers/basicInformation.js')
 
-const { DB_URI } = require('../config/config')
+const { DB_URI, BASE_API_URL } = require('../config/config')
 const connectToDatabase = require('../db')
 
 connectToDatabase(DB_URI)
@@ -31,6 +31,7 @@ router.use('/:endpoint/fields', fieldsRouter)
 router.use('/:endpoint/', dataRouter)
 router.use('/basic-information', basicInformationRouter)
 
-app.use('/.netlify/functions/api', router)
+app.use(BASE_API_URL, router)
 module.exports.handler = serverless(app)
 process.env.NODE_ENV === 'development' && (module.exports = app)
+process.env.NODE_ENV === 'test' && (module.exports = app)

@@ -1,9 +1,10 @@
 const User = require('../models/user')
 const supertest = require('supertest')
-const app = require('../app')
+const app = require('../functions/api')
 const api = supertest(app)
 const mongoose = require('mongoose')
 const { createUser } = require('./test_helpers.js')
+const { BASE_API_URL } = require('../config/config')
 
 beforeAll(async () => {
   await User.deleteMany({})
@@ -12,7 +13,7 @@ beforeAll(async () => {
 
 describe('/auth', () => {
   describe('/login', () => {
-    const url = '/auth/login'
+    const url = BASE_API_URL + '/auth/login'
 
     test('can login with correct username and password', async () => {
       const response = await api
@@ -48,7 +49,7 @@ describe('/auth', () => {
   })
 
   describe('/register', () => {
-    const url = '/auth/register'
+    const url = BASE_API_URL + '/auth/register'
 
     test('can sign up if no User is on database', async () => {
       await User.deleteMany({})

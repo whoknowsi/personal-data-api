@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
-const app = require('../app')
+const app = require('../functions/api')
 const api = supertest(app)
 const dataModels = require('../models/dataModels')
+const { BASE_API_URL } = require('../config/config')
 
 const {
   createUser,
@@ -23,6 +24,7 @@ beforeAll(async () => {
 })
 
 describe.each((Object.values(dataModels)))('test', (Model) => {
+  const loginUrl = BASE_API_URL + '/auth/login'
   let dataName = Model.collection.modelName.replace(/^./, (m) => m.toLowerCase())
   let endpoint
   let idOfInitialData
@@ -35,7 +37,7 @@ describe.each((Object.values(dataModels)))('test', (Model) => {
   beforeAll(async () => {
     dataName = Model.collection.modelName.replace(/^./, (m) => m.toLowerCase())
     endpoint = fromCameCaseToSnakeCase(dataName + 's')
-    url = `/${endpoint}`
+    url = BASE_API_URL + `/${endpoint}`
     initialData = allInitialData[dataName]
     dataToCreate = allDataToCreate[dataName]
     dataToUpdate = allDataToUpdate[dataName]
@@ -54,7 +56,7 @@ describe.each((Object.values(dataModels)))('test', (Model) => {
 
     test('return 404 if endpoint is invalid when trying to get specific item', async () => {
       await api
-        .get(`/badEndpoint/${idOfInitialData}`)
+        .get(BASE_API_URL + `/badEndpoint/${idOfInitialData}`)
         .expect(404)
     })
 
@@ -74,7 +76,7 @@ describe.each((Object.values(dataModels)))('test', (Model) => {
         .expect(200)
 
       const data = result.body.result
-      expect(data._id.valueOf()).toBe(idOfInitialData)
+      expect(data.id).toBe(idOfInitialData)
     })
 
     test(`return a 404 status with message "${Model.collection.modelName} not found" if provided id is not found`, async () => {
@@ -118,7 +120,7 @@ describe.each((Object.values(dataModels)))('test', (Model) => {
   describe('when user is logged in', () => {
     beforeAll(async () => {
       const result = await api
-        .post('/auth/login')
+        .post(loginUrl)
         .send({
           username: 'testusername',
           password: 'testpassword'
@@ -137,14 +139,14 @@ describe.each((Object.values(dataModels)))('test', (Model) => {
 
       test('PUT method', async () => {
         await api
-          .put(`/badEndpoint/${idOfInitialData}`)
+          .put(BASE_API_URL + `/badEndpoint/${idOfInitialData}`)
           .set('Authorization', `Bearer ${token}`)
           .expect(404)
       })
 
       test('DELETE method', async () => {
         await api
-          .delete(`/badEndpoint/${idOfInitialData}`)
+          .delete(BASE_API_URL + `/badEndpoint/${idOfInitialData}`)
           .set('Authorization', `Bearer ${token}`)
           .expect(404)
       })
